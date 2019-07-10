@@ -15,14 +15,11 @@
 		values (seq_board.nextval, #{title}, #{content}, #{writer})
 	</insert>	
 	
-	<insert id="insetSelectKey">
-	
-		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
-			select seq_board.nextval from dual
-		</selectKey>
+	<insert id="insertSelectKey">
+
+		<selectKey resultType="long" order="BEFORE" keyProperty="bno">select seq_board.nextval from dual </selectKey>
 		
-		insert into tbl_board (bno, title, content, writer)
-		values (bno, #{title}, #{content}, #{writer})		
+		insert into tbl_board (bno, title, content, writer)values (#{bno}, #{title}, #{content}, #{writer}) 
 	</insert>
 	
 	<select id="read" resultType="org.zerock.domain.BoardVO">
