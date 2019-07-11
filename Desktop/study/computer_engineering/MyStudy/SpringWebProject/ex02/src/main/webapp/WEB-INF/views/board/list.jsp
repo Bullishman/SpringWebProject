@@ -1,12 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<h1>List Page</h1>
-</body>
-</html>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<%@include file="../includes/header.jsp" %>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Tables</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">DataTables Advanced Tables</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<table width="100%"
+								class="table table-striped table-bordered table-hover"
+								id="dataTables-example">
+								<thead>
+									<tr>
+										<th>#番号</th>
+										<th>題名</th>
+										<th>作成者</th>
+										<th>作成日</th>
+										<th>修正日</th>
+									</tr>
+								</thead>
+								
+								<c:forEach items="${list}" var="board">
+								<tr>
+									<td><c:out value="${board.bno }" /></td>
+									<td><c:out value="${board.title }" /></td>
+									<td><c:out value="${board.writer }" /></td>
+									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate }" /></td>
+									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate }" /></td>
+								</tr>
+								</c:forEach>
+								
+							</table>
+							
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-6 -->
+			</div>
+			<!-- /.row -->
+
+
+<%@include file="../includes/footer.jsp" %>

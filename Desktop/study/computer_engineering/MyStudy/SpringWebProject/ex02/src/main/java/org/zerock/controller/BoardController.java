@@ -17,8 +17,6 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @RequestMapping("/board/*")
-// Java 설정시
-// @ComponentScan
 @AllArgsConstructor
 public class BoardController {
 	
