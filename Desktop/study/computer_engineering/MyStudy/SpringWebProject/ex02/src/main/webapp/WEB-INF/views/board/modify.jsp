@@ -21,6 +21,10 @@
 						<div class="panel-body">
 						
 						<form role="form" action="/board/modify" method="post">
+						
+								<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }" />'>
+								<input type='hidden' name='amount' value='<c:out value="${cri.amount }" />'>
+								
 
 								<div class="form-group">
 									<label>Bno</label> 
@@ -86,11 +90,12 @@
 		
 		var formObj = $("form");
 		
-		$('button').on("click", function(){
+		$('button').on("click", function(e){
 			
 			e.preventDefault();
 			
 			var operation = $(this).data("oper");
+			alert(operation);
 			
 			console.log(operation);
 			
@@ -102,7 +107,14 @@
 				//return;
 				
 				formObj.attr("action", "/board/list").attr("method", "get");
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amount']").clone();
+				/* alert("pageNumTag: " + $("input[name='pageNum']").val() +", amountTag: "+ $("input[name='amountTag']").val()); */
+				
 				formObj.empty();
+				formObj.append(pageNumTag);
+				formObj.append(amountTag);
+				
 			}
 			formObj.submit();
 			
