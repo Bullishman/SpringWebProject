@@ -36,18 +36,18 @@ public class BoardMapperTests {
 		list.forEach(board -> log.info(board));
 	}
 	
-	@Test
-	public void testInsert() {
-		
-		BoardVO board = new BoardVO();
-		board.setTitle("修正された題名");
-		board.setContent("修正された内容");
-		board.setWriter("newbie");
-		
-		mapper.insert(board);
-		
-		log.info(board);
-	}
+//	@Test
+//	public void testInsert() {
+//		
+//		BoardVO board = new BoardVO();
+//		board.setTitle("修正された題名");
+//		board.setContent("修正された内容");
+//		board.setWriter("newbie");
+//		
+//		mapper.insert(board);
+//		
+//		log.info(board);
+//	}
 	
 	@Test
 	public void testInsertSelectKey() {
@@ -84,5 +84,18 @@ public class BoardMapperTests {
 //		int count = mapper.update(board);
 //		log.info("UPDATE COUNT: " + count);
 //	}
+	
+	@Test
+	public void testSearch() {
+		
+		Criteria cri = new Criteria();
+		cri.setKeyword("新たな");
+		cri.setType("TC");
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		list.forEach(board -> log.info(board));
+		
+	}
 	
 }
