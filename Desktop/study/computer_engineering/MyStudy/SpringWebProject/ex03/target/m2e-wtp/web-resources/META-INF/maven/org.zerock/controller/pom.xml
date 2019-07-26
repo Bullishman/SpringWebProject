@@ -7,6 +7,8 @@
 	<name>ex03</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
+	
+	
 	<properties>
 		<java-version>1.8</java-version>
 		<org.springframework-version>5.1.2.RELEASE</org.springframework-version>
@@ -96,6 +98,7 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>

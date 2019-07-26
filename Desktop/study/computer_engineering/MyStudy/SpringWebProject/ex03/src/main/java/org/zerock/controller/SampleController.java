@@ -21,7 +21,7 @@ import org.zerock.domain.Ticket;
 import lombok.extern.log4j.Log4j;
 
 @RestController
-@RequestMapping("/sample")
+@RequestMapping("/a")
 @Log4j
 public class SampleController {
 	
@@ -45,12 +45,6 @@ public class SampleController {
 		return new SampleVO(113, "mmm", "nnn");
 	}
 	
-//	@GetMapping(value = "/getList")
-//	public List<SampleVO> getList() {
-//		
-//		return IntStream
-//	}
-
 	@GetMapping(value = "/getList")
 	public List<SampleVO> getList() {
 
@@ -70,7 +64,7 @@ public class SampleController {
 	@GetMapping(value = "/check", params = { "height", "weight" })
 	public ResponseEntity<SampleVO> check(Double height, Double weight) {
 		
-		SampleVO vo = new SampleVO(0, "" + height, "" + weight);
+		SampleVO vo = new SampleVO(000, "" + height, "" + weight);
 		
 		ResponseEntity<SampleVO> result = null;
 		
@@ -91,10 +85,25 @@ public class SampleController {
 		return new String[] {"category: " + cat, "productid: " + pid }; 
 	}
 	
+//	@PostMapping("/ticket")
+//	public Ticket convert(@RequestBody Ticket ticket) {
+//		
+//		ticket = new Ticket();
+//		ticket.setTno(123);
+//		ticket.setOwner("Admin");
+//		ticket.setGrade("AAA");
+//		
+//		log.info("convert......ticket" + ticket);
+//		
+//		return ticket;
+//	}
+	
 	@PostMapping("/ticket")
 	public Ticket convert(@RequestBody Ticket ticket) {
-		log.info("convert......ticket" + ticket);
-		
+
+		log.info("convert.......ticket" + ticket);
+
 		return ticket;
+
 	}
 }
