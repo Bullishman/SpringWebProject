@@ -127,11 +127,13 @@
 				<!-- /.col-lg-6 -->
 			</div>
 			<!-- /.row -->
-			
+
 
 <script type="text/javascript">
 	
 	$(document).ready(function(){
+		
+		
 		
 		var result = '<c:out value="${result}"/>';
 		
@@ -186,7 +188,7 @@
 		
 		
 		
-		var searchForm = ${"#searchForm"};
+		var searchForm = $("#searchForm");
 		
 		$("#searchForm button").on("click", function(e){
 			

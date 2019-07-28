@@ -67,6 +67,19 @@
 				<!-- /.col-lg-6 -->
 			</div>
 			<!-- /.row -->
+			
+<!-- <script type="text/javascript" src="/resources/js/reply.js"></script> -->
+
+
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+	console.log(replyService);
+});
+</script>
 
 <script type="text/javascript">
 
@@ -86,8 +99,6 @@ $(document).ready(function() {
 		operForm.attr("action","/board/list")
 		operForm.submit();
 	});
-	
-	
 	
 });
 
