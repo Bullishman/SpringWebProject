@@ -75,10 +75,57 @@
 
 <script type="text/javascript">
 
+console.log("==============");
+console.log("JS TEST");
+
+var bnoValue = '<c:out value="${board.bno}" />';
+
+/* // for replyService add test
+replyService.add(
+	{reply: "JS Test", replyer: "tester", bno:bnoValue},
+	function(result) {
+		alert("RESULT: " + result);
+	}
+);
+
 $(document).ready(function() {
 	
 	console.log(replyService);
+}); */
+
+replyService.getList({bno:bnoValue, page:1}, function(list){
+	
+	for(var i = 0, len = list.length || 0; i < len; i++) {
+		console.log(list[i]);
+	}
 });
+
+
+/* replyService.remove(23, function(count) {
+	
+	console.log(count);
+	
+	if (count === "success") {
+		alert('REMOVED');
+	}
+	
+}, function(err) {
+	alert('ERROR');
+}); */
+
+
+replyService.update({
+	rno : 22,
+	bno : bnoValue,
+	reply : "Modified Reply...."
+}, function(result) {
+	alert("修正完了。");
+});
+
+replyService.get(10, function(data){
+	console.log(data)
+});
+
 </script>
 
 <script type="text/javascript">
