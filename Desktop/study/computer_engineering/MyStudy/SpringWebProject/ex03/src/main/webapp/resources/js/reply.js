@@ -67,14 +67,14 @@ var replyService = (function(){
 		$.ajax({
 			type : 'put',
 			url : '/replies/' + reply.rno,
-			date : JSON.stringify(reply),
+			data : JSON.stringify(reply),
 			contentType : "application/json; charset=utf-8", 
 			success : function(result, status, xhr) {
 				if (callback) {
 					callback(result);
 				}
 			},
-			error : function() {
+			error : function(xhr, status, er) {
 				if (error) {
 					error(er);
 				}

@@ -68,7 +68,36 @@
 			</div>
 			<!-- /.row -->
 			
-<!-- <script type="text/javascript" src="/resources/js/reply.js"></script> -->
+			<div class="row">
+				<div class="col-lg-12">
+					
+					<!-- /.panel panel-default -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-comments fa-fw"></i> Reply
+						</div>
+
+						<!-- /.panel-body -->
+						<div class="panel-body">
+							
+							<ul class="chat">
+								
+								<li class="left clearfix" data-rno="12">
+									<div>
+										<div class="header">
+											<strong class="primary-font">user00</strong>
+											<small class="pull-right text-muted">2018-01-01 13:13</small>
+											
+											<p>Good job!</p>
+										</div>
+									</div>
+								</li>
+							</ul>						
+						</div>	
+					</div>			
+					<!-- /.panel panel-default -->
+				</div>
+			</div>
 
 
 <script type="text/javascript" src="/resources/js/reply.js"></script>
@@ -114,7 +143,7 @@ replyService.getList({bno:bnoValue, page:1}, function(list){
 }); */
 
 
-replyService.update({
+/* replyService.update({
 	rno : 22,
 	bno : bnoValue,
 	reply : "Modified Reply...."
@@ -123,8 +152,62 @@ replyService.update({
 });
 
 replyService.get(10, function(data){
-	console.log(data)
+	console.log()
+}); */
+
+
+$(document).ready(function() {
+	
+	var bnoValue = '<c:out value="${board.bno}" />';
+	var replyUL = $(".chat");
+	
+		showList(1);
+	
+		function showList(page) {
+			
+			replyService.getList({bno:bnoValue, page: page || 1}, function(list) {
+				
+				var str = "";
+				if(list == null || list.length == 0) {
+					replyUL.html("");					
+			
+					return;
+				}
+				
+				for (var i = 0, len = list.length || 0; i < len; i++) {
+					str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+					str += "<div><div class='header'><strong class='primary-font'>" +list[i].replyer+ "</strong>";
+					str += "<small class='pull-right text-muted'>" + list[i].replyDate + "</small><div>";
+					str += "<p>" + list[i].reply + "</p></div></li>"
+				}
+				replyUL.html(str);
+				
+			}); // end function
+			
+		} // end showLIst
+	
 });
+
+
+function displayTime(timeValue) {
+	
+	var today = new Data();
+	
+	var gap = today.getTime() - timeValue;
+	
+	var dateObj = new Date(timeValue);
+	var str = "";
+	
+	if (gap < (1000 * 60 * 60 *24)) {
+		
+		var hh = dateObj.getHours();
+		var mi = dateObj.getMinutes();
+		var ss = dateObj.getSeconds();
+		
+		
+	}
+}
+
 
 </script>
 
