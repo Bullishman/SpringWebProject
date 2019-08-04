@@ -127,6 +127,25 @@ var replyService = (function(){
 		}
 	};
 	
+	function getList(param, callback, error) {
+
+	    var bno = param.bno;
+	    var page = param.page || 1;
+	    
+	    $.getJSON("/replies/pages/" + bno + "/" + page + ".json",
+	        function(data) {
+	    	
+	          if (callback) {
+	            //callback(data); // コメントの目録だけを持って来る時 
+	            callback(data.replyCnt, data.list); //　コメントの回数と目録を持って来る時 
+	          }
+	        }).fail(function(xhr, status, err) {
+	      if (error) {
+	        error();
+	      }
+	    });
+	  }
+	
 	
 	return {
 		add : add,

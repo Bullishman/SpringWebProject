@@ -61,6 +61,13 @@
 								
 						</div>
 						<!-- /.panel-body -->
+						
+						<div class="panel-footer">
+							
+							
+						
+						</div>
+						
 					</div>
 					<!-- /.panel -->
 				</div>
@@ -219,6 +226,16 @@ $(document).ready(function() {
 			
 			replyService.getList({bno:bnoValue, page: page || 1}, function(list) {
 				
+				console.log("replyCnt: " + replyCnt);
+				console.log("list" + list);					
+				
+				if (page == -1) {
+					pageNum = Math.ceil(replyCnt/10.0);
+					showList(pageNum);
+					return;
+				}
+				
+				
 				var str = "";
 				if(list == null || list.length == 0) {
 					replyUL.html("");					
@@ -238,6 +255,25 @@ $(document).ready(function() {
 			}); // end function
 			
 		} // end showLIst
+		
+		var pageNum = 1;
+		var replyPageFooter = $(".panel-footer");
+		
+		function showReplyPage(replyCnt) {
+			
+			var endNum = Math.ceil(pageNum / 10.0) * 10;
+			var startNum = endNum - 9;
+			
+			var prev = startNum != 1;
+			var next = false;
+			
+			if (endNum * 10 >= replyCnt) {
+				endNum = Math.ceil(replyCnt/10.0);
+			}
+			
+			
+			
+		}
 		
 		
 		var modal = $(".modal");
@@ -277,7 +313,8 @@ $(document).ready(function() {
 				modal.find("input").val("");
 				modal.modal("hide");
 				
-				showList(1);
+				//showList(1);
+				showList(-1);
 				
 			});
 			
