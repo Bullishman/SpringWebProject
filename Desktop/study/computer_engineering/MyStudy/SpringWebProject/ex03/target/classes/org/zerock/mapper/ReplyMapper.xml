@@ -23,10 +23,6 @@
 	</update>
 
 	<select id="getListWithPaging" resultType="org.zerock.domain.ReplyVO">
-		select rno, bno, reply, replyer, replydate, updatedate
-		from tbl_reply
-		where bno = #{bno}
-		order by rno asc
 		
 		<![CDATA[
 		select rno, bno, reply, replyer, replydate, updatedate

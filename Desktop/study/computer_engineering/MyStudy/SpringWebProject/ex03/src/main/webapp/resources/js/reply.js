@@ -31,9 +31,10 @@ var replyService = (function(){
 		$.getJSON("/replies/pages/" + bno + "/" + page + ".json", 
 			function(data) {
 				if (callback) {
-					callback(data);
+					//callback(data); // コメントのリストだけを持ってくる場合 
+					callback(data.replyCnt, data.list); // コメントの数とリストを持ってくる場合
 				}
-			}).fail(function() {
+			}).fail(function(xhr, status, err) {
 				if (error) {
 					error();
 				}
