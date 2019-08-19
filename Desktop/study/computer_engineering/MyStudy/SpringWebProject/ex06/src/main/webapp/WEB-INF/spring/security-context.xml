@@ -30,6 +30,11 @@
 	<security:authentication-manager>
 	
 		<security:authentication-provider>
+			<!-- <security:jdbc-user-service data-source-ref="dataSource" 
+			    users-by-username-query="select username, password, enabled from users where username = 'admin00'"
+			    authorities-by-username-query="select username, authority from authorities where username = ?"
+			/> -->
+		
 			<security:user-service>
 
 				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER" />		
@@ -37,8 +42,11 @@
 				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN" />
 						
 			</security:user-service>
+
 		</security:authentication-provider>
 	
 	</security:authentication-manager>
+	
+
 
 </beans>
