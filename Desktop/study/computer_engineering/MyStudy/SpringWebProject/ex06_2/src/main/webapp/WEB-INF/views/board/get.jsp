@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <%@include file="../includes/header.jsp" %>
 
 			<div class="row">
@@ -33,15 +35,30 @@
 									<textarea class="form-control" rows="3" name="content" readonly="readonly"><c:out value="${board.content }" /></textarea>
 								</div>
 								
-								<div class="form-group">
+								<%-- <div class="form-group">
 									<label>Writer</label> <input class="form-control" name="writer" value='<c:out value="${board.writer}" />' readonly="readonly">
 								</div>
 							
 								<button data-oper="modify" class="btn btn-default"
 									onclick="location.href='/board/modify?bno=<c:out value="${board.bno }" />' ">
-									<%-- <a href="/board/modify?bno=<c:out value="${board.bno}" />">Modify</a> --%>
+									<a href="/board/modify?bno=<c:out value="${board.bno}" />">Modify</a>
 									Modify
-								</button>
+								</button> --%>
+
+								<div class="form-group">
+									<label>Writer</label> <input class="form-control" name="writer" value='<sec:authentication property="principal" var="pinfo" />' readonly="readonly">
+								</div>
+								
+								<sec:authorize access="isAuthenticated()">
+									
+									<c:if test="${pinfo.username eq board.writer}">
+									
+										<button data-oper='modify' class="btn btn-default">Modify</button>
+									
+									</c:if>
+								
+								</sec:authorize>
+								
 								<button data-oper="list" class="btn btn-info"
 									onclick="location.href='/board/list' ">
 									<!-- <a href="/board/list">List</a> -->
@@ -81,7 +98,9 @@
 						</div> -->
 						<div class="panel-heading">
 						<i class="fa fa-comments fa-fw"></i> Reply
+							<sec:authorize access="isAuthenticated()">
 							<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
+							</sec:authorize>
 						</div>
 
 						<!-- /.panel-body -->

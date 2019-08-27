@@ -31,12 +31,18 @@
 									<textarea class="form-control" rows="3" name="content"></textarea>
 								</div>
 								
-								<div class="form-group">
+								<!-- <div class="form-group">
 									<label>Writer</label> <input class="form-control" name="writer">
+								</div> -->
+								<div class="form-group">
+									<label>Writer</label>
+									<input class="form-control" name="writer" value='<sec:authentication property="principal.username" />' readonly="readonly">									
 								</div>
 							
 								<button type="submit" class="btn btn-default">Submit Button</button>
 								<button type="reset" class="btn btn-default">Reset Button</button>
+								
+								<input type="hidden" name="${_csrf.parameterName}" vaule="${_csrf.token}">
 										
 							</form>
 							
