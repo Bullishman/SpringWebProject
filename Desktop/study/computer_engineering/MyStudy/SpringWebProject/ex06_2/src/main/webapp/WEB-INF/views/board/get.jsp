@@ -352,10 +352,23 @@ $(document).ready(function() {
 		var modalModBtn = $("#modalModBtn");
 		var modalRemoveBtn = $("#modalRemoveBtn");
 		var modalRegisterBtn = $("#modalRegisterBtn");
+
+		var replyer = null;
+		
+		<sec:authorize access="isAuthenticated()">
+		
+		replyer = '<sec:authentication property="principal.username"/>';   
+		
+		</sec:authorize>
+		
+		var csrfHeaderName ="${_csrf.headerName}"; 
+		var csrfTokenValue="${_csrf.token}";
+
 		
 		$('#addReplyBtn').on("click", function(e){
 			
 			modal.find("input").val("");
+			modal.find("input[name='replyer']").val(replyer);
 			modalInputReplyDate.closest("div").hide();
 			modal.find("button[id !='modalCloseBtn']").hide();
 			
@@ -365,6 +378,9 @@ $(document).ready(function() {
 			
 		});
 		
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);			
+		});
 		
 		modalRegisterBtn.on("click", function(e){
 			
@@ -413,6 +429,8 @@ $(document).ready(function() {
 		
 		modalModBtn.on("click", function(e){
 			
+			var originalReplyer = modalInputReplyer.val();
+			
 			var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
 			
 			replyService.update(reply, function(result){
@@ -429,7 +447,27 @@ $(document).ready(function() {
 			
 			var rno = modal.data("rno");
 			
-			replyService.update(rno, function(result){
+			console.log("RNO: " + rno);
+			console.log("REPLYER: " + replyer);
+			
+			if (!replyer) {
+				alert("ログイン後,削除できます。");				
+				modal.modal("hide");
+				return;
+			}
+			
+			var originalReplyer = modalInputReplyer.val();
+			
+			console.log("Original Replyer: " + originalReplyer);
+			
+			if (replyer != originalReplyer) {
+				
+				alert("自分が作成したコメントのみ削除できます。");
+				modal.modal("hide");
+				return;
+			}
+			
+			replyService.remove(rno, originalReplyer, function(result){
 				
 				alert(result);
 				modal.modal("hide");
@@ -446,24 +484,24 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 
-$(document).ready(function() {
-	
-	var operForm = $("#operForm");
-	
-	$("button[data-oper='modify']").on("click", function(e){
-		operForm.attr("action", "/board/modify").submit();		
-	});
-	
-	$("button[data-oper='list']").on("click", function(e){
-		alert(operForm.find("input[name='bno']").val());
-		alert(operForm.find("input[name='amount']").val());
+	$(document).ready(function() {
 		
-		operForm.find("#bno").remove();
-		operForm.attr("action","/board/list")
-		operForm.submit();
+		var operForm = $("#operForm");
+		
+		$("button[data-oper='modify']").on("click", function(e){
+			operForm.attr("action", "/board/modify").submit();		
+		});
+		
+		$("button[data-oper='list']").on("click", function(e){
+			alert(operForm.find("input[name='bno']").val());
+			alert(operForm.find("input[name='amount']").val());
+			
+			operForm.find("#bno").remove();
+			operForm.attr("action","/board/list")
+			operForm.submit();
+		});
+		
 	});
-	
-});
 
 </script>
 

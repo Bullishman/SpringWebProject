@@ -56,4 +56,75 @@
 			<!-- /.row -->
 
 
+<script type="text/javascript">
+
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+
+	$("input[type='file']").change(function(e){
+		
+		var formData = new FormData();
+		var inputFile = $("input[name='uploadFile']");
+		var files = inputFile[0].files;
+		
+		for (var i = 0; i < files.length; i++) {
+			
+			if (!checkExtension(files[i],name, files[i].size)) {
+				return false;
+			}
+			formData.append("uploadFile", files[i]);
+		}
+		
+		
+		$.ajax({
+			url: '/uploadAjaxAction',
+			processData: false,
+			contentType: false,
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			data: formData,
+			type: 'POST',
+			dataType: 'json',
+				succes: function(result) {
+					console.log(result);
+					showUploadResult(result);
+				}
+			
+		}); // $.ajax
+		
+	});
+	
+	
+	$(".uploadResult").on("click", "button", function(e){
+		
+		console.log("delete file");
+		
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		
+		var targetLi = $(this).closest("li");
+		
+		$.ajax({
+			url: '/deleteFile',
+			data: {fileName: targetFile, type:type},
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			
+			dataType: 'text',
+			type: 'POST',
+				success: function() {
+					alert(result);
+					
+					targetLi.remove();
+				}
+			
+		}); // $.ajax
+		
+	});
+
+</script>
+
+
 <%@include file="../includes/footer.jsp" %>

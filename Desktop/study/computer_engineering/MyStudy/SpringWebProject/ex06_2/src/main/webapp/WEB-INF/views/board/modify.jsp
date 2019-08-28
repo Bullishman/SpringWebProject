@@ -104,6 +104,7 @@
 			
 			
 <script type="text/javascript">
+
 	$(document).ready(function() {
 		
 		var formObj = $("form");
@@ -145,6 +146,45 @@
 		});
 	});
 
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+
+	$("input[type='file']").change(function(e){
+		
+		var formData = new FormData();
+		var inputFile = $("input[name='uploadFile']");
+		var files = inputFile[0].files;
+		
+		for (var i = 0; i < files.length; i++) {
+			
+			if (!checkExtension(files[i],name, files[i].size)) {
+				return false;
+			}
+			formData.append("uploadFile", files[i]);
+		}
+		
+		
+		$.ajax({
+			url: '/uploadAjaxAction',
+			processData: false,
+			contentType: false,
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			data: formData,
+			type: 'POST',
+			dataType: 'json',
+				succes: function(result) {
+					console.log(result);
+					showUploadResult(result);
+				}
+			
+		}); // $.ajax
+		
+	});
+	
+	
 </script>
 
 
