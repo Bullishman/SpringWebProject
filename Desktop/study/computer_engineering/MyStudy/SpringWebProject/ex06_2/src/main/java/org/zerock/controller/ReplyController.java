@@ -105,6 +105,7 @@ public class ReplyController {
 	
 	// 書き込みの修正は'PUT'方式や'PATCH'方式を利用して処理し、実際の修正されるデータはJSONフォーマットなので、@RequestBodyを利用して処理します、
 	// @RequestBodyで処理されるデータは一般パラメータや@PathVariableパラメータを処理できないため、直接処理してくれる部分を注意しなければなりません。
+	@PreAuthorize("principal.username == #vo.replyer")
 	@RequestMapping(
 			method = { RequestMethod.PUT, RequestMethod.PATCH },
 			value = "/{rno}",

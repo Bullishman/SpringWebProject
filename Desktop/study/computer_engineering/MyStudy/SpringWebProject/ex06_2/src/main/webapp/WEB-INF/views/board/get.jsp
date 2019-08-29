@@ -431,14 +431,30 @@ $(document).ready(function() {
 			
 			var originalReplyer = modalInputReplyer.val();
 			
-			var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
+			var reply = {
+					rno:modal.data("rno"),
+					reply: modalInputReply.val(),
+					replyer: originalReplyer};
+			
+			if (!replyer) {
+				alert("ログイン後,修正できます。");
+				modal.modal("hide");
+				return;
+			}
+			
+			console.log("Original Replyer: " + originalReplyer);
+			
+			if (replyer != originalReplyer) {
+				alert("自分が作成したコメントのみ修正できます。");
+				modal.modal("hide");
+				return;
+			}
 			
 			replyService.update(reply, function(result){
 				
 				alert(result);
 				modal.modal("hide");
 				showList(pageNum);
-				
 			});
 			
 		});
